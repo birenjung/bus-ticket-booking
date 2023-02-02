@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\AuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\GoogleAuthController;
 use App\Http\Controllers\Bus\BusController;
+use App\Http\Controllers\BusRoutes\RouteController;
 use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\Frontend\PostYourRideController;
 use App\Http\Controllers\User\UserController;
@@ -73,5 +74,15 @@ Route::group(['middleware' => ['auth']], function () {
      Route::post('/admin/store-bus', [BusController::class, 'store'])->name('store.buses');
      Route::get('/admin/edit-bus/{id}', [BusController::class, 'edit'])->name('edit.bus');
      Route::post('/admin/update-bus/{id}', [BusController::class, 'update'])->name('update.bus');
+     Route::get('/admin/delete-bus/{id}', [BusController::class, 'destroy'])->name('delete.bus');
+
+     //bus routes
+     Route::get('/admin/routes', [AdminController::class, 'routes']);
+     Route::post('/admin/store-route', [RouteController::class, 'store'])->name('store.route');
+     Route::get('/admin/edit-route/{id}', [RouteController::class, 'edit'])->name('edit.route');
+     Route::post('/admin/update-route/{id}', [RouteController::class, 'update'])->name('update.route');
+     Route::get('/admin/delete-route/{id}', [RouteController::class, 'destroy'])->name('delete.route');
+     
+
      
 });

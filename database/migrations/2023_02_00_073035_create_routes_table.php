@@ -13,13 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('post_your_rides', function (Blueprint $table) {
+        Schema::create('routes', function (Blueprint $table) {
             $table->id();
-            $table->string('operator_name');
-            $table->string('phone_number');
-            $table->string('bus_type');
-            $table->string('leaving_from');
-            $table->string('going_destination');
+            $table->string('route_name');
+            $table->enum('status', ['Active', 'Inactive'])->default('Active');  
             $table->timestamps();
         });
     }
@@ -31,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('post_your_rides');
+        Schema::dropIfExists('routes');
     }
 };

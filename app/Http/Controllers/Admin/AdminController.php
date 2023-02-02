@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Buses;
+use App\Models\Routes;
 
 class AdminController extends Controller
 {
@@ -21,6 +22,13 @@ class AdminController extends Controller
     function buses()
     {
         $buses = Buses::all();
-        return view('admin.buses.index', compact('buses'));
+        $routes = Routes::orderBy('created_at','DESC')->get();
+        return view('admin.buses.index', compact('buses', 'routes'));
+    }
+
+    function routes()    
+    {
+        $routes = Routes::all();
+        return view('admin.routes.index', compact('routes'));
     }
 }

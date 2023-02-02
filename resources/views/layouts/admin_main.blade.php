@@ -169,6 +169,16 @@
                                     Buses
                                 </p>
                             </a>
+                        </li> 
+
+                        <li class="nav-header">Bus Routes</li>
+                        <li class="nav-item">
+                            <a href="/admin/routes" class="nav-link">
+                                <i class="nav-icon fas fa-calendar-alt"></i>
+                                <p>
+                                    Bus Routes
+                                </p>
+                            </a>
                         </li>                       
                         
 

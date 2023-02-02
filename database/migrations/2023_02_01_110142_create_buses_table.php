@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('bus_name');
             $table->string('bus_type');
             $table->string('image');
+            $table->float('price');
             $table->boolean('isWifi')->default(0);
             $table->boolean('isACfan')->default(0);
             $table->boolean('isMusic')->default(0);
@@ -26,6 +27,8 @@ return new class extends Migration
             $table->boolean('isWater')->default(0);
             $table->boolean('isCharger')->default(0);
             $table->boolean('isTV')->default(0); 
+            $table->unsignedBigInteger('route_id');
+            $table->foreign('route_id')->references('id')->on('routes');
             $table->enum('status', ['Active', 'Inactive'])->default('Active');           
             $table->timestamps();
         });

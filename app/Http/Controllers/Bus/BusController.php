@@ -89,7 +89,7 @@ class BusController extends Controller
             }
 
             $bus->save();
-
+            toastr()->success('Bus added');
             return back();          
 
         
@@ -149,7 +149,7 @@ class BusController extends Controller
         }
 
         $updateBus->update();
-
+        toastr()->success('Bus updated');
         return redirect('admin/buses');
     }
 
@@ -161,7 +161,10 @@ class BusController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $bus = Buses::find($id);
+        $bus->delete();
+        toastr()->success('Bus deleted');
+        return back();
     }
 
     

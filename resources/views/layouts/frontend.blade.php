@@ -56,8 +56,7 @@
                             </li>
                             <li><a class="dropdown-item" href="/logout">Log out</a></li>
                         </ul>
-                    </div>
-                    <a href="{{ route('postYourRide') }}"><button class="btn btn-primary">Post you ride</button></a>
+                    </div>                   
                 </div>
             @endif
         </div>
