@@ -1,0 +1,71 @@
+*{
+    margin: 0 0;
+    padding: 0 0;
+    font-family:Arial, Helvetica, sans-serif;   
+    box-sizing: border-box;  
+}
+
+/* nav */
+.auth a {
+    text-decoration: none;
+    color: black;
+}
+
+.hero_area{
+    position: relative; 
+    min-height: 500px;    
+}
+.hero_area::before{
+    content: "";
+    background-image: url('https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1169&q=80');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat; 
+    background-color:antiquewhite;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    /* opacity: 0.9; */
+    filter: brightness(0.5);
+    width: 100%;
+}
+
+.search_form {     
+    position: absolute;
+    top: 20%;
+    left: 50%;    
+    width: 30%;
+}
+
+/* bus features */
+.bus_features_section {
+    /* background-color: #535c68; */
+}
+
+.bus_features_list li {
+    list-style: none;
+    font-weight: 600;
+}
+
+.card-title {
+    color: #130f40;
+}
+
+/* footer */
+.footer ul li {
+    list-style-type: none;
+    font-size: 0.9rem;
+}
+
+/* admin buses */
+.bus-feature-list {
+    display: flex;
+    justify-content: space-evenly;   
+    flex-wrap: wrap;   
+}
+
+.bus-feature-list-items {    
+    width: 50%;
+}
