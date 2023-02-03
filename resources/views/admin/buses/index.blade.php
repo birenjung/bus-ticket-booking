@@ -43,13 +43,21 @@
                 </div>
                 <div class="form-group">
                     <label for="exampleInputEmail1">Route</label>
-                    <select class="form-select" aria-label="Default select example" name="route">
-                      <option selected>Open this select menu</option>
-                      <option value="1">One</option>
-                      <option value="2">Two</option>
-                      <option value="3">Three</option>
-                    </select>
+                    <div class="input-group">
+                        <select class="form-control" aria-label="Default select example" name="route">
+                            @foreach ($routes as $route)
+                                <option value="{{ $route->id }}">{{ $route->route_name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                     @error('route')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Fare</label>
+                    <input type="text" class="form-control" name="price" placeholder="Enter price">
+                    @error('price')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
                 </div>
@@ -139,6 +147,8 @@
                                     <th>Status</th>
                                     <th>Bus Type</th>
                                     <th width="20%">Images</th>
+                                    <th>Route</th>
+                                    <th>Price</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -157,15 +167,17 @@
                                         @endif
                                         <td>{{ $bus->bus_type }}</td>
                                         <td><img src="{{ url($bus->image) }}" alt="{{ $bus->bus_name }}"
-                                                width="50%"></td>
+                                                width="50%"></td>                                                
+                                        <td>{{$bus->route_name}}</td>
+                                        <td>{{ $bus->price }}</td>
                                         <td><a href="/admin/edit-bus/{{ $bus->id }}"
                                                 class="btn-sm btn-primary">Edit</a><a class="btn-sm btn-danger ml-2"
                                                 href="/admin/delete-bus/{{ $bus->id }}">Delete</a>
                                             @if ($bus->status == 'Active')
-                                                <a href="/admin/change-ad-status/{{ $bus->id }}"
+                                                <a href="/admin/change-bus-status/{{ $bus->id }}"
                                                     class="btn-sm btn-danger ml-2">Change Status</a>
                                             @else
-                                                <a href="/admin/change-ad-status/{{ $bus->id }}"
+                                                <a href="/admin/change-bus-status/{{ $bus->id }}"
                                                     class="btn-sm btn-success ml-2">Change Status</a>
                                             @endif
                                         </td>

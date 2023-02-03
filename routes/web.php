@@ -31,10 +31,6 @@ Route::get('/register', [AuthController::class, 'viewRegister'])->name('viewRegi
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::get('/login', [AuthController::class, 'viewLogin'])->name('viewLogin');
 
-//google login
-Route::get('auth/google', [GoogleAuthController::class, 'redirect'])->name('google_auth');
-Route::get('auth/google/callback', [GoogleAuthController::class, 'callBackGoogle'])->name('callback');
-
 // forgot password
 Route::get('/forgot-password', [AuthController::class, 'viewforgotPassword'])->name('viewforgotPassword');
 Route::post('/forgot-password', [AuthController::class, 'forgotPassword'])->name('forgotPassword');
@@ -75,6 +71,7 @@ Route::group(['middleware' => ['auth']], function () {
      Route::get('/admin/edit-bus/{id}', [BusController::class, 'edit'])->name('edit.bus');
      Route::post('/admin/update-bus/{id}', [BusController::class, 'update'])->name('update.bus');
      Route::get('/admin/delete-bus/{id}', [BusController::class, 'destroy'])->name('delete.bus');
+     Route::get('/admin/change-bus-status/{id}', [BusController::class, 'changeStatus']);
 
      //bus routes
      Route::get('/admin/routes', [AdminController::class, 'routes']);
@@ -82,6 +79,7 @@ Route::group(['middleware' => ['auth']], function () {
      Route::get('/admin/edit-route/{id}', [RouteController::class, 'edit'])->name('edit.route');
      Route::post('/admin/update-route/{id}', [RouteController::class, 'update'])->name('update.route');
      Route::get('/admin/delete-route/{id}', [RouteController::class, 'destroy'])->name('delete.route');
+     Route::get('/admin/change-route-status/{id}', [RouteController::class, 'changeStatus']);
      
 
      

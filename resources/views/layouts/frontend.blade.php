@@ -37,32 +37,15 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            @if (!auth()->user())
-                <div class="auth">
-                    <span style="margin-right: 20px"><a href="{{ route('register') }}">Register</a></span>
-                    <span><a href="{{ route('login') }}">Login</a></span>
-                </div>
-            @else
-                <div class="user d-flex">
-                    <div class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            {{ Auth::user()->name }}
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#">Manage my account</a></li>                            
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="/logout">Log out</a></li>
-                        </ul>
-                    </div>                   
-                </div>
-            @endif
+
+            <div class="auth">
+                Contact : 9827383049
+            </div> 
+
         </div>
     </nav>
 
-    
+
     <div>
         @yield('content')
     </div>

@@ -4,7 +4,11 @@
 
 <?Php
 use App\Models\User;
+use App\Models\Buses;
+use App\Models\Routes;
 $user_count = User::where('isRole','user')->get()->count();
+$bus_count = Buses::where('status', 'Active')->get()->count();
+$route_count = Routes::where('status', 'Active')->get()->count();
 $date = date(today()->format('Y-m-d'));
 $last_three_days_date = date( "Y-m-d",strtotime("-3 day"));
 $latest_user_count = User::where('created_at','>=',$last_three_days_date)->where('isRole','user')->get()->count();
@@ -13,35 +17,36 @@ $latest_user_count = User::where('created_at','>=',$last_three_days_date)->where
 <section class="content">
     <div class="container-fluid">
         <!-- Info boxes -->
-        <div class="row">
-            <div class="col-12 col-sm-6 col-md-3">
-                <div class="info-box">
-                    <span class="info-box-icon bg-info elevation-1"><i class="fas fa-user"></i></span>
-
-                    <div class="info-box-content">
-                        <span class="info-box-text">Total users</span>
-                        <span class="info-box-number">
-                            {{$user_count}}
-                        </span>
-                    </div>
-                    <!-- /.info-box-content -->
-                </div>
-                <!-- /.info-box -->
-            </div>
+        <div class="row">            
             <!-- /.col -->
             <div class="col-12 col-sm-6 col-md-3">
                 <div class="info-box mb-3">
                     <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-thumbs-up"></i></span>
 
                     <div class="info-box-content">
-                        <span class="info-box-text">Courses</span>
-                        {{-- <span class="info-box-number">{{$courses_count}}</span> --}}
+                        <span class="info-box-text">Active Buses</span>
+                        <span class="info-box-number">{{$bus_count}}</span>
                     </div>
                     <!-- /.info-box-content -->
                 </div>
                 <!-- /.info-box -->
             </div>
             <!-- /.col -->
+
+            <div class="col-12 col-sm-6 col-md-3">
+                <div class="info-box">
+                    <span class="info-box-icon bg-info elevation-1"><i class="fas fa-user"></i></span>
+
+                    <div class="info-box-content">
+                        <span class="info-box-text">Active Routes</span>
+                        <span class="info-box-number">
+                            {{$route_count}}
+                        </span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
 
             <!-- fix for small devices only -->
             <div class="clearfix hidden-md-up"></div>

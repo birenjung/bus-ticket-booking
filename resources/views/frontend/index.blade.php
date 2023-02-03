@@ -34,8 +34,9 @@
                 <img src="{{ $bus->image }}"
                     class="card-img-top" alt="...">
                 <div class="card-body">
-                    <h4 class="card-title">{{ $bus->bus_name }}</h4>
-                    <h5 class="card-title">{{ $bus->bus_type }}</h5>
+                    <h4 class="card-title text-center">{{ $bus->bus_name }}</h4>
+                    <h5 class="card-title text-center">{{ $bus->bus_type }}</h5>
+                    <p><strong>{{$bus->route_name}}</strong></p>
                     <div class="bus-features">
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" @if(old('isWifi', $bus->isWifi)) checked @endif>
@@ -92,6 +93,10 @@
                             </label>
                         </div>
                     </div>
+                </div>
+                <div class="card-footer">
+                    <p>Bus Fare : Rs. {{$bus->price}}</p>
+                    <p class="text-center"><button class="btn btn-sm btn-outline-primary">Buy Ticket</button></p>
                 </div>
             </div>
             @endforeach     

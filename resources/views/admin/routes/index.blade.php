@@ -59,7 +59,7 @@
                                     @else
                                     <td><h5><Span class="badge bg-danger">{{$route->status}}</Span></h5></td>
                                     @endif                                                     
-                                  <td><a href="/admin/edit-route/{{$route->id}}" class="btn-sm btn-primary">Edit</a><a class="btn-sm btn-danger ml-2" href="/admin/delete-route/{{$route->id}}">Delete</a> @if($route->status == 'Active')<a href="/admin/change-ad-status/{{$route->id}}" class="btn-sm btn-danger ml-2">Change Status</a> @else <a href="/admin/change-ad-status/{{$route->id}}" class="btn-sm btn-success ml-2">Change Status</a> @endif</td>
+                                  <td><a href="/admin/edit-route/{{$route->id}}" class="btn-sm btn-primary">Edit</a><a class="btn-sm btn-danger ml-2" href="/admin/delete-route/{{$route->id}}">Delete</a> @if($route->status == 'Active')<a href="/admin/change-route-status/{{$route->id}}" class="btn-sm btn-danger ml-2">Change Status</a> @else <a href="/admin/change-route-status/{{$route->id}}" class="btn-sm btn-success ml-2">Change Status</a> @endif</td>
                               </tr>
                               @endforeach
                           </tbody>

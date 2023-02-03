@@ -14,9 +14,22 @@ class RouteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function changeStatus($id)
     {
-        //
+        $route = Routes::find($id);
+        if($route->status == 'Active')
+        {
+            $route->status = 'Inactive';
+            $route->update();
+        }
+        else
+        {
+            $route->status = 'Active';
+            $route->update();
+        }
+
+        toastr()->success('Route status changed');
+        return back();
     }
 
     /**
@@ -70,7 +83,8 @@ class RouteController extends Controller
      */
     public function edit($id)
     {
-        //
+        $route = Routes::find($id);
+        return view('admin.routes.edit', compact('route'));
     }
 
     /**
@@ -82,7 +96,16 @@ class RouteController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'route_name' => 'required' 
+        ]);
+
+        $route = Routes::find($id);
+        $route->route_name = $request->route_name;
+        $route->update();
+
+        toastr()->success('Route updated.');
+        return redirect('admin/routes');
     }
 
     /**

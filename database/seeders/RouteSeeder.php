@@ -18,5 +18,8 @@ class RouteSeeder extends Seeder
         DB::table('routes')->insert([
             'route_name' => 'Itahari to Kathmandu',
         ]);
+        DB::table('routes')->insert([
+            'route_name' => 'Itahari to Dharan',
+        ]);        
     }
 }

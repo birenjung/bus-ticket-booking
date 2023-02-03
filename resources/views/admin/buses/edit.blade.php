@@ -37,8 +37,31 @@
                             <label class="custom-file-label" for="exampleInputFile">Choose file</label>
                         </div>
                     </div>                   
-                </div>                
+                </div>   
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Route</label>
+                    <div class="input-group">
+                        <select class="form-control" aria-label="Default select example" name="route">
+                            @foreach ($routes as $route)
+                                <option value="{{ $route->id }}" @if ($bus->route_id == $route->id)
+                                    selected
+                                @endif>{{ $route->route_name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    @error('route')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Fare</label>
+                    <input type="text" class="form-control" name="price" value="{{ $bus->price }}">
+                    @error('price')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
+                </div>             
             </div>
+            
             <!-- /.card-body -->
 
             <div class="card-footer">

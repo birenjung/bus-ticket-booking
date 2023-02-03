@@ -5,12 +5,15 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Buses;
+use Illuminate\Support\Facades\DB;
 
 class FrontendController extends Controller
 {
     function home()
     {
-        $buses = Buses::all();        
+        $buses = DB::table('routes')
+            ->join('buses', 'routes.id', '=', 'buses.route_id')            
+            ->get();     
         return view('frontend.index', compact('buses'));
     }  
     
