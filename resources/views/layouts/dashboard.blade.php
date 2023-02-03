@@ -30,7 +30,7 @@
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
-            <a class="navbar-brand" href="#"><strong>Bus</strong> Booking</a>
+            <a class="navbar-brand" href="/"><strong>Bus</strong> Booking</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -50,14 +50,13 @@
                             {{ Auth::user()->name }}
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#">Manage my account</a></li>                            
+                            <li><a class="dropdown-item" href="{{ route('manageMyAccount')}}">Manage my account</a></li>                            
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
                             <li><a class="dropdown-item" href="/logout">Log out</a></li>
                         </ul>
-                    </div>
-                    <a href="{{ route('postYourRide') }}"><button class="btn btn-primary">Post you ride</button></a>
+                    </div>                    
                 </div>
             @endif
         </div>
@@ -66,9 +65,9 @@
     
     <div class="container mt-5">
         <div class="row">
-            <div class="col-md-4">
-                <h4>Manage my account</h4>
-                <ul class="user_dashboard_list">
+            <div class="col-md-3">
+                <h4 class="text-center mb-5">Manage my account</h4>
+                <ul class="user_dashboard_list text-center">
                     <li>
                         <a href="">My Profile</a>                        
                     </li>

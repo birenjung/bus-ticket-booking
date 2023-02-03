@@ -69,3 +69,19 @@
 .bus-feature-list-items {    
     width: 50%;
 }
+
+/* user manage account */
+.profile-details ul li {
+    list-style: none;
+}
+
+.user_dashboard_list li {
+    list-style: none;
+    padding-bottom: 10px;
+    margin-bottom: 30px;  
+    border-bottom: 1px solid black;  
+}
+
+.user_dashboard_list li a {
+    text-decoration: none;   
+}

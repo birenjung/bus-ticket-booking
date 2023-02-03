@@ -13,18 +13,28 @@ use Illuminate\Support\Facades\DB;
 
 class AuthController extends Controller
 {
-    // function home()
-    // {
-    //     if(Auth::user()->isRole == 'admin')
-    //     {
-    //         return redirect('admin/dashboard');
-    //     }
-    //     else
-    //     {
-    //         return redirect('/admin/user');
-    //     }
-    // }
-    
+    function changePassword(Request $request, $id)
+    {
+        $request->validate([
+            'oldpassword' => 'required',
+            'password' => 'required|confirmed',
+            'password_confirmation' => 'required',
+            'email' => 'required',
+        ]);
+
+        $user = User::where('email', $request->email)->first();
+
+        if (Hash::check($request->oldpassword, $user->password)) {
+            $user->password = Hash::make($request->password);
+            $user->update();
+            toastr()->success('You have changed your password.');
+            return back();
+        } else {
+            toastr()->error('Your old password does not match');
+            return back();
+        }
+    }
+
     function viewRegister()
     {
         return view('auth.register');
@@ -44,7 +54,7 @@ class AuthController extends Controller
     {
         return view('auth.verify-email');
     }
-    
+
     function viewResetPassword()
     {
         return view('auth.reset-password');
@@ -61,10 +71,9 @@ class AuthController extends Controller
             //'terms' => 'required',
         ]);
 
-        if(User::where('email', $request->email)->exists())
-        {
-            toastr()->error('This email is already registered.', 'Sorry!');            
-           return back();
+        if (User::where('email', $request->email)->exists()) {
+            toastr()->error('This email is already registered.', 'Sorry!');
+            return back();
         }
 
         $user = new User();
@@ -72,26 +81,26 @@ class AuthController extends Controller
         $user->email = $request->email;
         $user->phone_number = $request->phone_number;
         $user->password = Hash::make($request->password);
-        $user->save();        
+        $user->save();
         $email = $request->email;
 
-         //generate a pin number
-         $pinNumber = random_int(10000, 99999);
+        //generate a pin number
+        $pinNumber = random_int(10000, 99999);
 
-         $verify_email = new VerifyEmail();        
-         $verify_email->email = $request->email;
-         $verify_email->token = $pinNumber;
-         $verify_email->save();
+        $verify_email = new VerifyEmail();
+        $verify_email->email = $request->email;
+        $verify_email->token = $pinNumber;
+        $verify_email->save();
 
-         //sending email with token for verification
-        $info = array('pin' => $pinNumber);                
+        //sending email with token for verification
+        $info = array('pin' => $pinNumber);
 
-        Mail::send('verify_mail', $info, function($message) use($email){
-                $message->to($email)
-                        ->subject('Token for email verification.');
+        Mail::send('verify_mail', $info, function ($message) use ($email) {
+            $message->to($email)
+                ->subject('Token for email verification.');
         });
 
-        toastr()->success('You are successfully registered. Please check your email and verify.', 'Congrats!');     
+        toastr()->success('You are successfully registered. Please check your email and verify.', 'Congrats!');
         return redirect()->route('viewVerifyEmail')->with(['email' => $email]);
     }
 
@@ -114,13 +123,11 @@ class AuthController extends Controller
 
         Auth::login($user);
 
-        if(Auth::user()->isRole == 'admin')
-        {
+        if (Auth::user()->isRole == 'admin') {
             return redirect('/admin');
         }
 
         return redirect('/');
-
     }
 
     function verifyEmail(Request $request)
@@ -133,20 +140,19 @@ class AuthController extends Controller
         $email = $request->email;
         $verified_user = VerifyEmail::where('email', $request->email)->where('token', $request->pin_number)->first();
 
-        if($verified_user)
-        {
+        if ($verified_user) {
             $user = User::where('email', $request->email)->first();
             $user->email_verified_at = date('Y-m-d H:i');
             $user->update();
 
             $delete = VerifyEmail::where('email', $request->email)->delete();
 
-            toastr()->success('You are a verified user now.', 'Congrats!');     
+            toastr()->success('You are a verified user now.', 'Congrats!');
             return redirect()->route('login');
         }
 
-        toastr()->error('Invalid Pin Number.', 'Sorry!');     
-        return view('auth.verify-email',compact('email'));
+        toastr()->error('Invalid Pin Number.', 'Sorry!');
+        return view('auth.verify-email', compact('email'));
     }
 
     function forgotPassword(Request $request)
@@ -157,8 +163,7 @@ class AuthController extends Controller
 
         $email = $request->email;
 
-        if(!User::where('email', $request->email)->exists())
-        {
+        if (!User::where('email', $request->email)->exists()) {
             toastr()->warning('This email does not exist.', 'Sorry');
             return redirect()->route('forgotPassword');
         }
@@ -178,47 +183,63 @@ class AuthController extends Controller
         );
 
         // sending email with pin number
-        $info = array('pin' => $pinNumber);                
+        $info = array('pin' => $pinNumber);
 
-        Mail::send('forgot_pwd_mail', $info, function($message) use($email){
-                $message->to($email)
-                        ->subject('OTP to reset password');
+        Mail::send('forgot_pwd_mail', $info, function ($message) use ($email) {
+            $message->to($email)
+                ->subject('OTP to reset password');
         });
-        
-        return view('auth.reset-password',compact('email'));
-        
+
+        return view('auth.reset-password', compact('email'));
     }
 
     function resetPassword(Request $request)
     {
-        $request->validate([            
+        $request->validate([
             'email' => 'required',
             'pin_number' => 'required',
             'password' => 'required|confirmed|min:8',
-            'password_confirmation' => 'required',            
+            'password_confirmation' => 'required',
         ]);
 
-        if(DB::table('password_resets')->where('email', $request->email)->where('token', $request->pin_number)->first())
-        {
+        if (DB::table('password_resets')->where('email', $request->email)->where('token', $request->pin_number)->first()) {
             $user = User::where('email', $request->email)->first();
             $user->password = Hash::make($request->password);
             $user->update();
 
             DB::table('password_resets')->where('email', $request->email)->delete();
 
-            toastr()->success('You have successfully reset your password.', 'Congrats!');     
-            return redirect()->route('login');            
-           
+            toastr()->success('You have successfully reset your password.', 'Congrats!');
+            return redirect()->route('login');
         }
         $email = $request->email;
-            
-        toastr()->error('Invalid Pin Number.', 'Sorry!');     
-        return view('auth.reset-password',compact('email'));
-    } 
+
+        toastr()->error('Invalid Pin Number.', 'Sorry!');
+        return view('auth.reset-password', compact('email'));
+    }
 
     function logout()
     {
         Auth::logout();
         return redirect('/');
-    }    
+    }
+
+    // update profile from user manage account section
+    function updateProfile(Request $request, $id)
+    {
+        $request->validate([
+            'fullname' => 'required',
+            'email' => 'required',
+            'phone_number' => 'required',
+        ]);
+
+        $user = User::find($id);
+        $user->name = $request->fullname;
+        $user->email = $request->email;
+        $user->phone_number = $request->phone_number;
+        $user->update();
+
+        toastr()->success('You have updated your user information.');
+        return back();
+    }
 }

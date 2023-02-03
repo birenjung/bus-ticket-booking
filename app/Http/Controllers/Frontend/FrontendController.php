@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Buses;
+use App\Models\Routes;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
 class FrontendController extends Controller
@@ -18,13 +20,13 @@ class FrontendController extends Controller
     }  
     
     function manageMyAccount()
-    {
-        if(auth()->user()->isRole == 'user')
+    {    
+        if(auth()->user())
         {
-            return view('frontend.userprofile');
+            return view('frontend.userprofile');  
         }
-
         abort(403);
+            
     }
     
     function myrides()
@@ -36,4 +38,20 @@ class FrontendController extends Controller
 
         abort(403);
     }
+
+    function search(Request $request)
+    {
+        $request->validate([
+            'search_bus' => 'required',
+        ]);
+
+        $query = $request->search_bus;
+        $buses = DB::table('routes')
+            ->join('buses', 'routes.id', '=', 'buses.route_id')     
+            ->where('route_name', 'like', "%$query%")            
+            ->get();            
+        return view('frontend.search_results', compact('buses'));
+            
+    }
+   
 }

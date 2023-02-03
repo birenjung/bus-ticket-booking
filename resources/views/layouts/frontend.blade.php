@@ -30,7 +30,7 @@
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
-            <a class="navbar-brand" href="#"><strong>Bus</strong> Booking</a>
+            <a class="navbar-brand" href="/"><strong>Bus</strong> Booking</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -38,9 +38,23 @@
             </button>
 
 
+            @if (!auth()->user())
             <div class="auth">
-                Contact : 9827383049
+                <a href="{{ route('register') }}" style="margin-right: 20px">Register</a>
+                <a href="{{ route('login') }}">Login</a>
             </div> 
+            @else            
+            <div class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  {{auth()->user()->name}}
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <li><a class="dropdown-item" href="{{route('manageMyAccount')}}">Manage User Account</a></li>                  
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="{{ route('logout') }}">Log Out</a></li>
+                </ul>
+            </div>          
+            @endif
 
         </div>
     </nav>

@@ -51,9 +51,14 @@ Route::post('/post-your-ride/{id}', [PostYourRideController::class, 'update'])->
 
 // manage-my-accout
 Route::get('/user', [FrontendController::class, 'manageMyAccount'])->name('manageMyAccount');
+Route::post('/user/update-profile/{id}', [AuthController::class, 'updateProfile'])->name('update.profile');
+Route::post('/user/change-password/{id}', [AuthController::class, 'changePassword']);
 
 //my-rides
 Route::get('/myrides', [FrontendController::class, 'myrides'])->name('myrides');
+
+// search buses
+Route::get('/search', [FrontendController::class, 'search'])->name('search');
 
 
 

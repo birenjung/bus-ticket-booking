@@ -116,6 +116,10 @@ class RouteController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $route = Routes::find($id);
+        $route->delete();
+
+        toastr()->success('Route deleted.');
+        return back();
     }
 }
