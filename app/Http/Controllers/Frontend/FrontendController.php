@@ -15,7 +15,8 @@ class FrontendController extends Controller
     {
         $buses = DB::table('routes')
             ->join('buses', 'routes.id', '=', 'buses.route_id')            
-            ->get();     
+            ->where('buses.status', 'Active')
+            ->get();    
         return view('frontend.index', compact('buses'));
     }  
     
@@ -47,7 +48,8 @@ class FrontendController extends Controller
 
         $query = $request->search_bus;
         $buses = DB::table('routes')
-            ->join('buses', 'routes.id', '=', 'buses.route_id')     
+            ->join('buses', 'routes.id', '=', 'buses.route_id')
+            ->where('routes.status', 'Active')     
             ->where('route_name', 'like', "%$query%")            
             ->get();            
         return view('frontend.search_results', compact('buses'));

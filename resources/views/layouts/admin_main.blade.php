@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bus Booking</title>
+    <title>Admin Bus Booking</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -92,13 +92,23 @@
                                     Bus Routes
                                 </p>
                             </a>
+                        </li>   
+
+                        <li class="nav-header">Tickets</li>
+                        <li class="nav-item">
+                            <a href="/admin/tickets" class="nav-link">
+                                <i class="nav-icon fas fa-calendar-alt"></i>
+                                <p>
+                                    Tickets
+                                </p>
+                            </a>
                         </li>                       
                         
 
                         <li class="nav-header">Settings</li>                      
 
                         <li class="nav-item">
-                            <a href="/admin/logout" class="nav-link">
+                            <a href="/logout" class="nav-link">
                                 <i class="nav-icon fas fa-file"></i>
                                 <p>Logout</p>
                             </a>

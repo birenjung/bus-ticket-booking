@@ -125,14 +125,23 @@
                                         </div>
                                         <div class="modal-body">
                                             @if (auth()->user())
-                                                <form>
-                                                    <div class="mb-3">
+                                                <form action="{{route('store.buy')}}" method="POST">
+                                                    @csrf
+                                                    {{-- <div class="mb-3">
                                                         <label class="form-label">Full Name</label>
                                                         <input type="text" class="form-control" name="fullname" value="{{auth()->user()->name}}">                                                        
                                                     </div>
                                                     <div class="mb-3">
                                                         <label class="form-label">Phone Number</label>
                                                         <input type="number" class="form-control" name="phone_number" value="{{auth()->user()->phone_number}}">                                                        
+                                                    </div>                                              --}}
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Date</label>
+                                                        <input type="date" class="form-control" name="date">                                                        
+                                                    </div>                                             
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Date</label>
+                                                        <input type="hidden" class="form-control" name="bus_id" value="{{$bus->id}}">                                                        
                                                     </div>                                             
                                                     <button type="submit" class="btn btn-primary">Submit</button>
                                                 </form>

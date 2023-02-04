@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\GoogleAuthController;
 use App\Http\Controllers\Bus\BusController;
 use App\Http\Controllers\BusRoutes\RouteController;
+use App\Http\Controllers\BuyTicket\BuyTicketController;
 use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\Frontend\PostYourRideController;
 use App\Http\Controllers\User\UserController;
@@ -44,10 +45,10 @@ Route::get('/reset-password', [AuthController::class, 'viewResetPassword'])->nam
 Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('resetPassword');
 
 // post your ride
-Route::get('/post-your-ride', [PostYourRideController::class, 'index'])->name('postYourRide');
-Route::post('/post-your-ride', [PostYourRideController::class, 'store'])->name('store.postYourRide');
-Route::get('/post-your-ride/{id}', [PostYourRideController::class, 'show'])->name('showOne.postYourRide');
-Route::post('/post-your-ride/{id}', [PostYourRideController::class, 'update'])->name('update.postYourRide');
+// Route::get('/post-your-ride', [PostYourRideController::class, 'index'])->name('postYourRide');
+// Route::post('/post-your-ride', [PostYourRideController::class, 'store'])->name('store.postYourRide');
+// Route::get('/post-your-ride/{id}', [PostYourRideController::class, 'show'])->name('showOne.postYourRide');
+// Route::post('/post-your-ride/{id}', [PostYourRideController::class, 'update'])->name('update.postYourRide');
 
 // manage-my-accout
 Route::get('/user', [FrontendController::class, 'manageMyAccount'])->name('manageMyAccount');
@@ -55,10 +56,13 @@ Route::post('/user/update-profile/{id}', [AuthController::class, 'updateProfile'
 Route::post('/user/change-password/{id}', [AuthController::class, 'changePassword']);
 
 //my-rides
-Route::get('/myrides', [FrontendController::class, 'myrides'])->name('myrides');
+//Route::get('/myrides', [FrontendController::class, 'myrides'])->name('myrides');
 
 // search buses
 Route::get('/search', [FrontendController::class, 'search'])->name('search');
+
+// buy ticket
+Route::post('/store-buy-ticket', [BuyTicketController::class, 'store'])->name('store.buy');
 
 
 
@@ -86,6 +90,8 @@ Route::group(['middleware' => ['auth']], function () {
      Route::get('/admin/delete-route/{id}', [RouteController::class, 'destroy'])->name('delete.route');
      Route::get('/admin/change-route-status/{id}', [RouteController::class, 'changeStatus']);
      
-
+    // buy ticket
+    Route::get('/admin/tickets', [AdminController::class, 'tickets'])->name('tickets');
+    //Route::get('/get-buy-ticket', [BuyTicketController::class, 'getAll'])->name('getAll.buy');
      
 });
