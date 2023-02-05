@@ -9,6 +9,7 @@ use App\Http\Controllers\BusRoutes\RouteController;
 use App\Http\Controllers\BuyTicket\BuyTicketController;
 use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\Frontend\PostYourRideController;
+use App\Http\Controllers\TimeTable\TimeTableController;
 use App\Http\Controllers\User\UserController;
 
 /*
@@ -64,6 +65,9 @@ Route::get('/search', [FrontendController::class, 'search'])->name('search');
 // buy ticket
 Route::post('/store-buy-ticket', [BuyTicketController::class, 'store'])->name('store.buy');
 
+// seats
+Route::get('/select-seats/{id}/{date}', [FrontendController::class, 'selectSeat'])->name('view.selectseats');
+
 
 
 Route::group(['middleware' => ['auth']], function () {
@@ -92,6 +96,7 @@ Route::group(['middleware' => ['auth']], function () {
      
     // buy ticket
     Route::get('/admin/tickets', [AdminController::class, 'tickets'])->name('tickets');
+    Route::get('/admin/date_time', [TimeTableController::class, 'tickets']);
     //Route::get('/get-buy-ticket', [BuyTicketController::class, 'getAll'])->name('getAll.buy');
      
 });

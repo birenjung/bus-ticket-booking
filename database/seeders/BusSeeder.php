@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class BusSeeder extends Seeder
 {
@@ -31,5 +32,21 @@ class BusSeeder extends Seeder
             'price' => 2000,
             'route_id' => 1,
         ]);
+        DB::table('buses')->insert([
+            'bus_name' => 'Sakira',
+            'bus_type' => 'Normal',
+            'image' => 'images/buses/normalbus.png',
+            'isWifi' => 0,
+            'isACfan' => 0,
+            'isMusic' => 1,
+            'isComfortSeat' => 1,
+            'isFirstAid' => 1,
+            'isWater' => 1,
+            'isCharger' => 1,
+            'isCharger' => 1,
+            'isTV' => 1,
+            'price' => 2000,
+            'route_id' => 1,
+        ]);                
     }
 }

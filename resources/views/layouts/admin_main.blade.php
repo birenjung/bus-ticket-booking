@@ -92,6 +92,16 @@
                                     Bus Routes
                                 </p>
                             </a>
+                        </li> 
+
+                        <li class="nav-header">Time Table</li>
+                        <li class="nav-item">
+                            <a href="/admin/date_time" class="nav-link">
+                                <i class="nav-icon fas fa-calendar-alt"></i>
+                                <p>
+                                    Time Table
+                                </p>
+                            </a>
                         </li>   
 
                         <li class="nav-header">Tickets</li>

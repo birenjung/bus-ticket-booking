@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Buses;
 use Illuminate\Http\Request;
 use App\Models\Routes;
+use App\Models\Seats;
 
 class BusController extends Controller
 {
@@ -92,6 +93,21 @@ class BusController extends Controller
         $bus->price = $request->price;
         $bus->route_id = $request->route;
         $bus->save();
+        // // when a bus is stored, empty seats are also created.
+        // $seat = new Seats();
+        // $seat->isA1 = 0;
+        // $seat->isA2 = 0;
+        // $seat->isA3 = 0;
+        // $seat->isA4 = 0;
+        // $seat->isA5 = 0;
+        // $seat->isB1 = 0;
+        // $seat->isB2 = 0;
+        // $seat->isB3 = 0;
+        // $seat->isB4 = 0;
+        // $seat->isB5 = 0;
+        // $seat->bus_id = $bus->id;
+        // $seat->user_id = auth()->user()->id;
+        // $seat->save();
         toastr()->success('Bus added');
         return back();
     }

@@ -41,4 +41,16 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    function seats()
+    {
+        return $this->hasMany(Seats::class);
+    }
+
+    function bookings()
+    {
+        return $this->hasMany(Booking::class);
+    }
 }
+
+
