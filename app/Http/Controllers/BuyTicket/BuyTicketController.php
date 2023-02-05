@@ -4,24 +4,36 @@ namespace App\Http\Controllers\BuyTicket;
 
 use App\Http\Controllers\Controller;
 use App\Models\Booking;
+use App\Models\Buses;
 use App\Models\BuyTicket;
 use App\Models\Seats;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class BuyTicketController extends Controller
 {
     function store(Request $request)
     {
-        // $request->validate([           
-        //     'date' => 'required',
-        // ]);
+       $valid = [$request->isA1,
+                    $request->isA2,
+                    $request->isA3,
+                    $request->isA4,
+                    $request->isA5,
+                    $request->isB1,
+                    $request->isB2,
+                    $request->isB3,
+                    $request->isB4,
+                    $request->isB5,                       
+    ];
 
-        $buy = new BuyTicket();
-        $buy->user_id = auth()->user()->id; 
-        $buy->bus_id = $request->bus_id;      
-        $buy->date = $request->date;
-        $buy->save();
+    $match = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
+    if($valid == [...$match])
+    {
+        toastr()->warning('Select at least one seat.');
+        return back();
+    }else
+    {
         $seat = Seats::where('bus_id', $request->bus_id)->where('date', $request->date)->first();
         if ($request->isA1 == 'on') {
             $seat->isA1 = 1;
@@ -52,8 +64,9 @@ class BuyTicketController extends Controller
         }
         if ($request->isB5 == 'on') {
             $seat->isB5 = 1;
-        }        
+        }
         $seat->update();
+
 
         $booking = new Booking();
 
@@ -88,11 +101,65 @@ class BuyTicketController extends Controller
             $booking->isB5 = 1;
         }
         $booking->user_id = auth()->user()->id;
-        $booking->bus_id = $request->bus_id;      
-        $booking->date = $request->date;
-        $booking->save(); 
+        $booking->bus_id = $request->bus_id;
 
-        toastr()->success('You have successfully bought a ticket');
-        return back();
+
+        $booking->date = $request->date;
+        $booking->save();
+
+
+
+        $count = Booking::count();
+        $booking = Booking::find($count);
+        $bus_fare = Buses::find($request->bus_id);
+        $booking['fare'] = $bus_fare->price;
+        $qty = [];
+
+        if ($booking->isA1 == 1) {
+            array_push($qty, 1);
+        }
+        if ($booking->isA2 == 1) {
+            array_push($qty, 1);
+        }
+        if ($booking->isA3 == 1) {
+            array_push($qty, 1);
+        }
+        if ($booking->isA4 == 1) {
+            array_push($qty, 1);
+        }
+        if ($booking->isA5 == 1) {
+            array_push($qty, 1);
+        }
+        if ($booking->isB1 == 1) {
+            array_push($qty, 1);
+        }
+        if ($booking->isB2 == 1) {
+            array_push($qty, 1);
+        }
+        if ($booking->isB3 == 1) {
+            array_push($qty, 1);
+        }
+        if ($booking->isB4 == 1) {
+            array_push($qty, 1);
+        }
+        if ($booking->isB5 == 1) {
+            array_push($qty, 1);
+        }
+
+        $booking['qty'] = count($qty);
+        $booking['total'] = $booking['fare'] * $booking['qty'];
+
+        // toastr()->success('You have successfully bought a ticket');
+        return view('frontend.payment', compact('booking'));
+
+    }
+        
+                  
+
+
+
+        // return response([
+        //     'data' => $booking
+        // ]);
     }
 }

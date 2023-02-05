@@ -7,8 +7,8 @@
 <div class="container mt-5">
     <div class="row d-flex justify-content-center">
     <div class="col-md-6">
-        <form action="{{ route('store.buy') }}" method="POST">
-            @csrf
+        <form action="{{ route('store.buy') }}" method="GET">
+            {{-- @csrf --}}
             {{-- <div class="mb-3">
                 <label class="form-label">Full Name</label>
                 <input type="text" class="form-control" name="fullname" value="{{auth()->user()->name}}">                                                        

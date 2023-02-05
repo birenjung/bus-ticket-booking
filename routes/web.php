@@ -63,7 +63,7 @@ Route::post('/user/change-password/{id}', [AuthController::class, 'changePasswor
 Route::get('/search', [FrontendController::class, 'search'])->name('search');
 
 // buy ticket
-Route::post('/store-buy-ticket', [BuyTicketController::class, 'store'])->name('store.buy');
+Route::get('/store-buy-ticket', [BuyTicketController::class, 'store'])->name('store.buy');
 
 // seats
 Route::get('/select-seats/{id}/{date}', [FrontendController::class, 'selectSeat'])->name('view.selectseats');
