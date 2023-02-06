@@ -22,7 +22,12 @@
                                     <th>Phone Number</th>
                                     <th>Bus Name</th>                                    
                                     <th>Route</th>
+                                    <th>Total</th>
+                                    <th>Booked Seats</th>
+                                    <th>For Date</th>
+                                    <th>Boarding place</th>
                                     <th>Date</th>
+                                    <th>Payment</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -33,7 +38,12 @@
                                         <td>{{ $ticket->phone_number }}</td>
                                         <td>{{ $ticket->bus_name }}</td>
                                         <td>{{ $ticket->route_name }}</td>
-                                        <td>{{ $ticket->date }}</td>                        
+                                        <td>{{ $ticket->total }}</td>
+                                        <td>{{ $ticket['booked_seats']}}</td>
+                                        <td>{{ $ticket['for_date']}} </td>
+                                        <td>{{$ticket->boarding_place}}</td>
+                                        <td>{{ $ticket->date }}</td>  
+                                        <td>{{$ticket->payment_method}}</td>                      
                                     </tr>
                                 @endforeach
                             </tbody>

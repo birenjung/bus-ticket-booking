@@ -15,16 +15,14 @@ use Carbon\Carbon;
 class FrontendController extends Controller
 {
     function home()
-    {   
-        
+    {
+
         $buses = Buses::where('status', 'Active')->get();
-        foreach($buses as $bus)
-        {
+        foreach ($buses as $bus) {
             $route = Routes::where('id', $bus->route_id)->first();
             $bus['route'] = $route->route_name;
             $seats = Seats::where('bus_id', $bus->id)->first();
-            $bus['seats'] = $seats;           
-                
+            $bus['seats'] = $seats;
         }
         // $buses = DB::table('routes')
         //     ->join('buses', 'routes.id', '=', 'buses.route_id')            
@@ -33,23 +31,20 @@ class FrontendController extends Controller
         // return response([
         //     'msg' => $buses,
         // ]) ;   
-       return view('frontend.index', compact('buses'));
-    }  
-    
+        return view('frontend.index', compact('buses'));
+    }
+
     function manageMyAccount()
-    {    
-        if(auth()->user())
-        {
-            return view('frontend.userprofile');  
+    {
+        if (auth()->user()) {
+            return view('frontend.userprofile');
         }
         abort(403);
-            
     }
-    
+
     function myrides()
     {
-        if(auth()->user()->isRole == 'user')
-        {
+        if (auth()->user()->isRole == 'user') {
             return view('frontend.myrides');
         }
 
@@ -67,26 +62,26 @@ class FrontendController extends Controller
         $date = $request->date;
         $buses = DB::table('routes')
             ->join('buses', 'routes.id', '=', 'buses.route_id')
-            ->where('routes.status', 'Active')     
-            ->where('route_name', 'like', "%$query%")            
-            ->get();            
-        return view('frontend.search_results', compact('buses', 'query', 'date'));
+            //->join('seats', 'buses.id', '=', 'seats.bus_id')
+            ->where('routes.status', 'Active')
+            ->where('route_name', 'like', "%$query%")
+            ->get();        
             
+        // return response([
+        //     'data' => $buses
+        // ]);
+        return view('frontend.search_results', compact('buses', 'query', 'date'));
     }
 
-    function selectSeat($id, $date)    
+    function selectSeat($id, $date)
     {
-        if(!auth()->user())
-        {
+        if (!auth()->user()) {
             toastr()->warning('Please register and login to proceed.');
             return back();
-        }
-        else
-        {
+        } else {
             $bus = Buses::find($id);
             $checkseats = Seats::where('bus_id', $bus->id)->where('date', $date)->first();
-            if(!$checkseats)
-            {
+            if (!$checkseats) {
                 $seat = new Seats();
                 $seat->isA1 = 0;
                 $seat->isA2 = 0;
@@ -101,12 +96,12 @@ class FrontendController extends Controller
                 $seat->bus_id = $bus->id;
                 $seat->user_id = auth()->user()->id;
                 $seat->date = $date;
-                $seat->save(); 
-                
-                $checkseats = Seats::find($seat->id);               
+                $seat->save();
+
+                $checkseats = Seats::find($seat->id);
             }
-           
+
             return view('frontend.selectseats', compact('checkseats'));
-        }             
-    }   
+        }
+    }
 }

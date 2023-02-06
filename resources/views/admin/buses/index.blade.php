@@ -55,6 +55,13 @@
                     @enderror
                 </div>
                 <div class="form-group">
+                    <label for="exampleInputEmail1">Departure Time</label>
+                    <input type="text" class="form-control" name="departure" placeholder="Enter departure time">
+                    @error('departure')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
+                </div>
+                <div class="form-group">
                     <label for="exampleInputEmail1">Fare</label>
                     <input type="text" class="form-control" name="price" placeholder="Enter price">
                     @error('price')
@@ -148,6 +155,7 @@
                                     <th>Bus Type</th>
                                     <th width="20%">Images</th>
                                     <th>Route</th>
+                                    <th>Departure</th>
                                     <th>Price</th>
                                 </tr>
                             </thead>
@@ -169,6 +177,7 @@
                                         <td><img src="{{ url($bus->image) }}" alt="{{ $bus->bus_name }}"
                                                 width="50%"></td>                                                
                                         <td>{{$bus->route_name}}</td>
+                                        <td>{{$bus->departure}}</td>
                                         <td>{{ $bus->price }}</td>
                                         <td><a href="/admin/edit-bus/{{ $bus->id }}"
                                                 class="btn-sm btn-primary">Edit</a><a class="btn-sm btn-danger ml-2"

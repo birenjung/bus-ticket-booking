@@ -28,6 +28,7 @@ return new class extends Migration
             $table->boolean('isCharger')->default(0);
             $table->boolean('isTV')->default(0); 
             $table->unsignedBigInteger('route_id');
+            $table->string('departure');
             $table->foreign('route_id')->references('id')->on('routes');
             $table->enum('status', ['Active', 'Inactive'])->default('Active');           
             $table->timestamps();

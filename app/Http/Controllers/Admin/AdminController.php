@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Booking;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Buses;
@@ -27,7 +28,7 @@ class AdminController extends Controller
         
         $routes = Routes::orderBy('created_at','DESC')->get();
         $buses = DB::table('routes')
-            ->join('buses', 'routes.id', '=', 'buses.route_id')            
+            ->join('buses', 'routes.id', '=', 'buses.route_id')                    
             ->get();
         return view('admin.buses.index', compact('buses', 'routes'));
     }
@@ -45,13 +46,16 @@ class AdminController extends Controller
        
        foreach($tickets as $ticket)
        {
-            $user = User::where('id', $ticket->user_id)->first();       
-            $ticket['fullname'] = $user->name;
-            $ticket['phone_number'] = $user->phone_number;
-            $buses = Buses::where('route_id', $ticket->bus_id)->first();   
+            //$user = User::where('id', $ticket->user_id)->first();       
+            //$ticket['fullname'] = $user->name;
+            //$ticket['phone_number'] = $user->phone_number;
+            $buses = Buses::where('id', $ticket->bus_id)->first();   
             $ticket['bus_name'] = $buses->bus_name;
             $routes = Routes::where('id', $buses->route_id)->first();
-            $ticket['route_name'] = $routes->route_name;                           
+            $ticket['route_name'] = $routes->route_name;
+            $booked_seats = Booking::where('bus_id', $ticket->bus_id)->latest()->first();           
+            $ticket['booked_seats'] = $booked_seats->booked_seats; 
+            $ticket['for_date'] = $booked_seats->date;                          
        }
 
        

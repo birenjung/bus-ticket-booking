@@ -29,15 +29,16 @@ class BusSeeder extends Seeder
             'isCharger' => 1,
             'isCharger' => 1,
             'isTV' => 1,
-            'price' => 2000,
-            'route_id' => 1,
+            'price' => 50,
+            'route_id' => 2,
+            'departure' => '4:30 AM'
         ]);
         DB::table('buses')->insert([
             'bus_name' => 'Sakira',
-            'bus_type' => 'Normal',
-            'image' => 'images/buses/normalbus.png',
-            'isWifi' => 0,
-            'isACfan' => 0,
+            'bus_type' => 'Delux',
+            'image' => 'images/buses/deluxbus.jpg',
+            'isWifi' => 1,
+            'isACfan' => 1,
             'isMusic' => 1,
             'isComfortSeat' => 1,
             'isFirstAid' => 1,
@@ -47,6 +48,7 @@ class BusSeeder extends Seeder
             'isTV' => 1,
             'price' => 2000,
             'route_id' => 1,
+            'departure' => "4:30 AM",
         ]);                
     }
 }

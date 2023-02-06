@@ -18,4 +18,9 @@ class BuyTicket extends Model
     {
         return $this->hasOne(Buses::class);
     }
+
+    function bookings()
+    {
+        return $this->hasOne(Booking::class);
+    }
 }

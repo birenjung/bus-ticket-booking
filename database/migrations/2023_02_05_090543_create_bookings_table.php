@@ -31,8 +31,14 @@ return new class extends Migration
             $table->foreign('bus_id')->references('id')->on('buses');       
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
+
+            $table->string('booked_seats')->nullable();
+            $table->float('fare')->nullable();
+            $table->float('qty')->nullable();
+            $table->float('total')->nullable();
             
             $table->string('date');
+            $table->string('date_of_booking');
             $table->timestamps();
         });
     }

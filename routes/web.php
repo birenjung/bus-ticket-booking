@@ -63,10 +63,16 @@ Route::post('/user/change-password/{id}', [AuthController::class, 'changePasswor
 Route::get('/search', [FrontendController::class, 'search'])->name('search');
 
 // buy ticket
-Route::get('/store-buy-ticket', [BuyTicketController::class, 'store'])->name('store.buy');
+Route::post('/store-buy-ticket', [BuyTicketController::class, 'store'])->name('store.buy');
+
+// payment info
+//te::get('/payment-info', [BuyTicketController::class, 'paymentInfo'])->name('payment.info');
 
 // seats
 Route::get('/select-seats/{id}/{date}', [FrontendController::class, 'selectSeat'])->name('view.selectseats');
+
+//checkout
+Route::post('/checkout', [BuyTicketController::class, 'checkout'])->name('checkout');
 
 
 

@@ -7,6 +7,7 @@ use App\Models\Booking;
 use App\Models\Buses;
 use App\Models\BuyTicket;
 use App\Models\Seats;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
@@ -102,64 +103,92 @@ class BuyTicketController extends Controller
         }
         $booking->user_id = auth()->user()->id;
         $booking->bus_id = $request->bus_id;
-
-
         $booking->date = $request->date;
+        $booking->date_of_booking = Carbon::now();
         $booking->save();
 
 
 
         $count = Booking::count();
-        $booking = Booking::find($count);
-        $bus_fare = Buses::find($request->bus_id);
-        $booking['fare'] = $bus_fare->price;
+        $booking = Booking::find($count);        
         $qty = [];
 
         if ($booking->isA1 == 1) {
-            array_push($qty, 1);
+            array_push($qty, 'A1');
         }
         if ($booking->isA2 == 1) {
-            array_push($qty, 1);
+            array_push($qty, 'A2');
         }
         if ($booking->isA3 == 1) {
-            array_push($qty, 1);
+            array_push($qty, 'A3');
         }
         if ($booking->isA4 == 1) {
-            array_push($qty, 1);
+            array_push($qty, 'A4');
         }
         if ($booking->isA5 == 1) {
-            array_push($qty, 1);
+            array_push($qty, 'A5');
         }
         if ($booking->isB1 == 1) {
-            array_push($qty, 1);
+            array_push($qty, 'B1');
         }
         if ($booking->isB2 == 1) {
-            array_push($qty, 1);
+            array_push($qty, 'B2');
         }
         if ($booking->isB3 == 1) {
-            array_push($qty, 1);
+            array_push($qty, 'B3');
         }
         if ($booking->isB4 == 1) {
-            array_push($qty, 1);
+            array_push($qty, 'B4');
         }
         if ($booking->isB5 == 1) {
-            array_push($qty, 1);
-        }
+            array_push($qty, 'B5');
+        }        
 
-        $booking['qty'] = count($qty);
-        $booking['total'] = $booking['fare'] * $booking['qty'];
+        $booked_seats = implode(', ', $qty);
+        $booking->booked_seats = $booked_seats;        
+        $bus_fare = Buses::find($request->bus_id);
+        $booking->fare = $bus_fare->price;
+        $booking->qty = count($qty);
+        $booking->total = $booking['fare'] * $booking['qty'];
+        $booking->update();
 
         // toastr()->success('You have successfully bought a ticket');
-        return view('frontend.payment', compact('booking'));
+       return view('frontend.payment', compact('booking'));
+       //return redirect()->route('payment.info');
+    }
 
     }
+
+    function checkout(Request $request)
+    {
+        $request->validate([
+            'fullname' => 'required',
+            'phone_number' => 'required',
+            'boarding_place' => 'required',
+            'payment_method' => 'required',
+        ]);
+
+        $buy_ticket = new BuyTicket();
+        $buy_ticket->fullname = $request->fullname;
+        $buy_ticket->phone_number = $request->phone_number;
+        $buy_ticket->boarding_place = $request->boarding_place;
+        $buy_ticket->payment_method = $request->payment_method;
+        $buy_ticket->qty = $request->qty;
+        $buy_ticket->total = $request->total;
+        $buy_ticket->user_id = auth()->user()->id;
+        $buy_ticket->bus_id = $request->bus_id;
+        $buy_ticket->booking_id = $request->id;
+        $buy_ticket->date = Carbon::now();
+        $buy_ticket->save();
+
+        toastr()->success('You have purchased a ticket.');
+        return redirect('/');
+
         
-                  
+    }
 
-
-
-        // return response([
-        //     'data' => $booking
-        // ]);
+    function paymentInfo()
+    {
+        return view('frontend.payment');
     }
 }

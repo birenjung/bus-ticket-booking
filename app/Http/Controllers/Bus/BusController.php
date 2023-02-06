@@ -53,6 +53,7 @@ class BusController extends Controller
             'image' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
             'price' => 'required',
             'route' => 'required',
+            'departure' => 'required',
         ]);
 
         $bus = new Buses();
@@ -92,6 +93,7 @@ class BusController extends Controller
         }
         $bus->price = $request->price;
         $bus->route_id = $request->route;
+        $bus->departure = $request->departure;
         $bus->save();
         // // when a bus is stored, empty seats are also created.
         // $seat = new Seats();
@@ -147,7 +149,8 @@ class BusController extends Controller
         $request->validate([
             'bus_name' => 'required',
             'bus_type' => 'required',
-            'image' => 'image|mimes:jpg,png,jpeg,gif,svg|max:2048'
+            'image' => 'image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+            'departure' => 'required',
         ]);
 
         $updateBus = Buses::find($id);
@@ -165,6 +168,7 @@ class BusController extends Controller
         }
         $updateBus->route_id = $request->route;
         $updateBus->price = $request->price;
+        $updateBus->departure = $request->departure;
         $updateBus->update();
         toastr()->success('Bus updated');
         return redirect('admin/buses');
