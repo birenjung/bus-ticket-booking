@@ -1,9 +1,9 @@
 @extends('layouts.admin_main')
 @section('component')
-@section('title', 'Tickets')
+@section('title', 'Search for Booking Details')
 @section('head')
 
-@endsection  
+@endsection
 
 <section class="content">
     <div class="container">
@@ -15,39 +15,28 @@
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <table id="example1" class="table table-bordered table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Full Name</th>
-                                    <th>Phone Number</th>
-                                    <th>Bus Name</th>                                    
-                                    <th>Route</th>
-                                    <th>Total</th>
-                                    <th>Booked Seats</th>
-                                    <th>For Date</th>
-                                    <th>Boarding place</th>
-                                    <th>Date</th>
-                                    <th>Payment</th>
-                                </tr>
-                            </thead>
-                            <tbody>
+                        <form action="{{ route('bookings') }}" method="get">
+                            {{-- @csrf --}}
+                            <div class="mb-3">
+                                <label for="bus_name">Select Bus</label>
+                                <select class="form-control" aria-label="Default select example" name="bus_name">
+                                    @foreach ($bookings as $booking)
+                                        <option value="{{ $booking->bus_id }}">{{ $booking['bus_name'] }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="bus_name">Select Date</label>
+                                <select class="form-control" aria-label="Default select example" name="date">
+                                    @foreach ($bookings as $booking)
+                                        <option value="{{ $booking->booking_date }}">{{ $booking->booking_date }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary">View booking</button>
 
-                                @foreach ($tickets as $ticket)
-                                    <tr>
-                                        <td>{{ $ticket->fullname }}</td>                                        
-                                        <td>{{ $ticket->phone_number }}</td>
-                                        <td>{{ $ticket->bus_name }}</td>
-                                        <td>{{ $ticket->route_name }}</td>
-                                        <td>{{ $ticket->total }}</td>
-                                        <td>{{ $ticket['booked_seats']}}</td>
-                                        <td>{{ $ticket['for_date']}} </td>
-                                        <td>{{$ticket->boarding_place}}</td>
-                                        <td>{{ $ticket->date }}</td>  
-                                        <td>{{$ticket->payment_method}}</td>                      
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                        </form>
                     </div>
                     <!-- /.card-body -->
                 </div>
@@ -59,6 +48,8 @@
     </div>
     <!-- /.container-fluid -->
 </section>
+
+
 
 @section('scripts')
 

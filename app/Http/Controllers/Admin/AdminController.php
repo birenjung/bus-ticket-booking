@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Booking;
+use App\Models\Bookings;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Buses;
@@ -41,28 +42,24 @@ class AdminController extends Controller
 
     function tickets()
     {
-        $tickets = BuyTicket::all();
-        
-       
-       foreach($tickets as $ticket)
-       {
-            //$user = User::where('id', $ticket->user_id)->first();       
-            //$ticket['fullname'] = $user->name;
-            //$ticket['phone_number'] = $user->phone_number;
-            $buses = Buses::where('id', $ticket->bus_id)->first();   
-            $ticket['bus_name'] = $buses->bus_name;
-            $routes = Routes::where('id', $buses->route_id)->first();
-            $ticket['route_name'] = $routes->route_name;
-            $booked_seats = Booking::where('bus_id', $ticket->bus_id)->latest()->first();           
-            $ticket['booked_seats'] = $booked_seats->booked_seats; 
-            $ticket['for_date'] = $booked_seats->date;                          
-       }
+        $bookings = Bookings::all();
+        foreach($bookings as $booking)
+        {
+            $bus = Buses::find($booking->bus_id);
+            $booking['bus_name'] = $bus->bus_name;            
+        }     
 
-       
-
-       return view('admin.tickets.index', compact('tickets'));
+       return view('admin.tickets.index', compact('bookings'));
         // return response([
-        //     'data' => $tickets
+        //     'data' => $bookings
         // ]);
+    }
+
+    function showBookings(Request $request)
+    {
+                
+        $booking_info = Bookings::where('bus_id', $request->bus_name)->where('booking_date', $request->date)->get();
+
+        return view('admin.tickets.bookings', compact('booking_info'));
     }
 }

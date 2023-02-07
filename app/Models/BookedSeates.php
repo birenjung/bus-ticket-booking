@@ -5,17 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Booking extends Model
+class BookedSeates extends Model
 {
     use HasFactory;
-    
-    function user()
-    {
-        return $this->belongsTo(User::class);
-    }
 
     function buses()
     {
-        return $this->hasOne(Buses::class);
+        return $this->belongsTo(Buses::class);
     }
 }

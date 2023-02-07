@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\BookedSeates;
+use App\Models\Bookings;
 use Illuminate\Http\Request;
 use App\Models\Buses;
 use App\Models\Routes;
@@ -23,14 +25,7 @@ class FrontendController extends Controller
             $bus['route'] = $route->route_name;
             $seats = Seats::where('bus_id', $bus->id)->first();
             $bus['seats'] = $seats;
-        }
-        // $buses = DB::table('routes')
-        //     ->join('buses', 'routes.id', '=', 'buses.route_id')            
-        //     ->where('buses.status', 'Active')
-        //     ->get();
-        // return response([
-        //     'msg' => $buses,
-        // ]) ;   
+        } 
         return view('frontend.index', compact('buses'));
     }
 
@@ -62,14 +57,9 @@ class FrontendController extends Controller
         $date = $request->date;
         $buses = DB::table('routes')
             ->join('buses', 'routes.id', '=', 'buses.route_id')
-            //->join('seats', 'buses.id', '=', 'seats.bus_id')
-            ->where('routes.status', 'Active')
             ->where('route_name', 'like', "%$query%")
             ->get();        
             
-        // return response([
-        //     'data' => $buses
-        // ]);
         return view('frontend.search_results', compact('buses', 'query', 'date'));
     }
 
@@ -79,29 +69,37 @@ class FrontendController extends Controller
             toastr()->warning('Please register and login to proceed.');
             return back();
         } else {
+            
             $bus = Buses::find($id);
-            $checkseats = Seats::where('bus_id', $bus->id)->where('date', $date)->first();
-            if (!$checkseats) {
-                $seat = new Seats();
-                $seat->isA1 = 0;
-                $seat->isA2 = 0;
-                $seat->isA3 = 0;
-                $seat->isA4 = 0;
-                $seat->isA5 = 0;
-                $seat->isB1 = 0;
-                $seat->isB2 = 0;
-                $seat->isB3 = 0;
-                $seat->isB4 = 0;
-                $seat->isB5 = 0;
-                $seat->bus_id = $bus->id;
-                $seat->user_id = auth()->user()->id;
-                $seat->date = $date;
-                $seat->save();
 
-                $checkseats = Seats::find($seat->id);
+            $seates = Seats::where('bus_id',$id)->get();
+            
+            $bookings = Bookings::where('bus_id',$id)->where('booking_date',$date)->get();
+
+            foreach($bookings as $book)
+            {
+                $booked_seat = BookedSeates::where('booking_id',$book->id)->get();
+                $book['booked_seats'] = $booked_seat;
+
+                foreach($seates as $seat)
+                {
+                    foreach($booked_seat as $books)
+                    {
+                        if($books->seat_id == $seat->id)
+                        {
+                            $seat['booked_status'] = True;
+                            break;
+                        }
+                    }
+                }
             }
 
-            return view('frontend.selectseats', compact('checkseats'));
+            $bus['seates'] = $seates;
+            $bus['bookings'] = $bookings;
+
+            $booking_date = $date;
+
+            return view('frontend.selectseats', compact('bus','booking_date'));
         }
     }
 }

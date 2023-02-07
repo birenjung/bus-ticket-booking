@@ -94,12 +94,12 @@
                             </a>
                         </li>               
 
-                        <li class="nav-header">Tickets</li>
+                        <li class="nav-header">Bookings</li>
                         <li class="nav-item">
                             <a href="/admin/tickets" class="nav-link">
                                 <i class="nav-icon fas fa-calendar-alt"></i>
                                 <p>
-                                    Tickets
+                                    Bookings
                                 </p>
                             </a>
                         </li>                       

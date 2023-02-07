@@ -9,6 +9,7 @@ use App\Http\Controllers\BusRoutes\RouteController;
 use App\Http\Controllers\BuyTicket\BuyTicketController;
 use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\Frontend\PostYourRideController;
+use App\Http\Controllers\Seat\SeatController;
 use App\Http\Controllers\TimeTable\TimeTableController;
 use App\Http\Controllers\User\UserController;
 
@@ -63,7 +64,7 @@ Route::post('/user/change-password/{id}', [AuthController::class, 'changePasswor
 Route::get('/search', [FrontendController::class, 'search'])->name('search');
 
 // buy ticket
-Route::post('/store-buy-ticket', [BuyTicketController::class, 'store'])->name('store.buy');
+Route::post('/store-buy-ticket', [BuyTicketController::class, 'store'])->name('ticket.buy');
 
 // payment info
 //te::get('/payment-info', [BuyTicketController::class, 'paymentInfo'])->name('payment.info');
@@ -104,5 +105,12 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/admin/tickets', [AdminController::class, 'tickets'])->name('tickets');
     Route::get('/admin/date_time', [TimeTableController::class, 'tickets']);
     //Route::get('/get-buy-ticket', [BuyTicketController::class, 'getAll'])->name('getAll.buy');
+
+    // add seat
+    Route::post('/admin/add-seat/{bus_id}', [SeatController::class, 'store'])->name('store.seat');
+    Route::get('/admin/seat/{bus_id}', [SeatController::class, 'create'])->name('create.seat');
+
+    //bookings
+    Route::get('/admin/bookings', [AdminController::class, 'showBookings'])->name('bookings');
      
 });

@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             RouteSeeder::class,
             BusSeeder::class,
+            SeatSeeder::class, 
           ]);
     }
 }

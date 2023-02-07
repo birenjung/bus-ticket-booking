@@ -189,6 +189,7 @@
                                                 <a href="/admin/change-bus-status/{{ $bus->id }}"
                                                     class="btn-sm btn-success ml-2">Change Status</a>
                                             @endif
+                                            <a href="/admin/seat/{{$bus->id}}" class="btn-sm btn-warning ml-2">Add Seat</a>                                            
                                         </td>
                                     </tr>
                                 @endforeach
