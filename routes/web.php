@@ -46,11 +46,6 @@ Route::post('/verify-email', [AuthController::class, 'verifyEmail'])->name('veri
 Route::get('/reset-password', [AuthController::class, 'viewResetPassword'])->name('viewResetPassword');
 Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('resetPassword');
 
-// post your ride
-// Route::get('/post-your-ride', [PostYourRideController::class, 'index'])->name('postYourRide');
-// Route::post('/post-your-ride', [PostYourRideController::class, 'store'])->name('store.postYourRide');
-// Route::get('/post-your-ride/{id}', [PostYourRideController::class, 'show'])->name('showOne.postYourRide');
-// Route::post('/post-your-ride/{id}', [PostYourRideController::class, 'update'])->name('update.postYourRide');
 
 // manage-my-accout
 Route::get('/user', [FrontendController::class, 'manageMyAccount'])->name('manageMyAccount');
@@ -58,7 +53,7 @@ Route::post('/user/update-profile/{id}', [AuthController::class, 'updateProfile'
 Route::post('/user/change-password/{id}', [AuthController::class, 'changePassword']);
 
 //my-rides
-//Route::get('/myrides', [FrontendController::class, 'myrides'])->name('myrides');
+Route::get('/myrides', [FrontendController::class, 'myrides'])->name('myrides');
 
 // search buses
 Route::get('/search', [FrontendController::class, 'search'])->name('search');
@@ -72,8 +67,7 @@ Route::post('/store-buy-ticket', [BuyTicketController::class, 'store'])->name('t
 // seats
 Route::get('/select-seats/{id}/{date}', [FrontendController::class, 'selectSeat'])->name('view.selectseats');
 
-//checkout
-Route::post('/checkout', [BuyTicketController::class, 'checkout'])->name('checkout');
+Route::post('/rating', [FrontendController::class, 'rating'])->name('rating');
 
 
 
@@ -112,5 +106,6 @@ Route::group(['middleware' => ['auth']], function () {
 
     //bookings
     Route::get('/admin/bookings', [AdminController::class, 'showBookings'])->name('bookings');
+    Route::get('/admin/change-pay-status/{id}', [AdminController::class, 'changePayStatus']);
      
 });

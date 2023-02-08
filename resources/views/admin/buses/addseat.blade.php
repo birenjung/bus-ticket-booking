@@ -45,8 +45,7 @@
                         <table id="example1" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th>Seat Number</th>
-                                    <th>Status</th>                                    
+                                    <th>Seat Number</th>                                                                    
                                 </tr>
                             </thead>
                             <tbody>
@@ -54,16 +53,7 @@
                                
                                 @foreach ($seats as $seat)
                                 <tr>
-                                    <td>{{ $seat->seat_number }}</td>
-                                    @if ($seat->is_booked == 0)
-                                        <td>
-                                            Available
-                                        </td>
-                                    @else
-                                        <td>
-                                            Booked
-                                        </td>
-                                    @endif                                        
+                                    <td>{{ $seat->seat_number }}</td>                                                                      
                                 </tr>
                             @endforeach
                                

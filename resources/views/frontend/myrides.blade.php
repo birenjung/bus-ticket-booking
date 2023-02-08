@@ -5,33 +5,37 @@
 @endsection
 
 @section('content')
-<table class="table">
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">First</th>
-        <th scope="col">Last</th>
-        <th scope="col">Handle</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <th scope="row">1</th>
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>@mdo</td>
-      </tr>
-      <tr>
-        <th scope="row">2</th>
-        <td>Jacob</td>
-        <td>Thornton</td>
-        <td>@fat</td>
-      </tr>
-      <tr>
-        <th scope="row">3</th>
-        <td colspan="2">Larry the Bird</td>
-        <td>@twitter</td>
-      </tr>
-    </tbody>
-  </table>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Date</th>
+                <th scope="col">Passenger Name</th>
+                <th scope="col">Bus</th>
+                <th scope="col">Pick Up Point</th>
+                <th scope="col">Total Fare</th>
+            </tr>
+        </thead>
+        <tbody>
+            @php
+                $sn = 1;
+            @endphp
+            @if (count($bookings) > 0)
+                @foreach ($bookings as $booking)
+                    <tr>
+                        <td>{{ $sn++ }}</td>
+                        <td>{{ $booking->booking_date }}</td>
+                        <td>{{ $booking->passenger_name }}</td>
+                        <td>{{$booking['bus_name']}}</td>
+                        <td>{{ $booking->passenger_pickup_point }}</td>
+                        <td>Rs. {{ $booking->total_price }}</td>
+                    </tr>
+                @endforeach
+            @else
+                <tr>
+                    <td colspan="5" class="text-center text-danger">You have no any record of booking bus seats yet.</td>
+                </tr>
+            @endif
+        </tbody>
+    </table>
 @endsection

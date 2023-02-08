@@ -55,5 +55,45 @@ class SeatSeeder extends Seeder
             'seat_number' => 'A10',
             'bus_id' => 1,           
         ]);
+        DB::table('seats')->insert([
+            'seat_number' => 'B1',
+            'bus_id' => 1,           
+        ]);
+        DB::table('seats')->insert([
+            'seat_number' => 'B2',
+            'bus_id' => 1,           
+        ]);
+        DB::table('seats')->insert([
+            'seat_number' => 'B3',
+            'bus_id' => 1,           
+        ]);
+        DB::table('seats')->insert([
+            'seat_number' => 'B4',
+            'bus_id' => 1,           
+        ]);
+        DB::table('seats')->insert([
+            'seat_number' => 'B5',
+            'bus_id' => 1,           
+        ]);
+        DB::table('seats')->insert([
+            'seat_number' => 'B6',
+            'bus_id' => 1,           
+        ]);
+        DB::table('seats')->insert([
+            'seat_number' => 'B7',
+            'bus_id' => 1,           
+        ]);
+        DB::table('seats')->insert([
+            'seat_number' => 'B8',
+            'bus_id' => 1,           
+        ]);
+        DB::table('seats')->insert([
+            'seat_number' => 'B9',
+            'bus_id' => 1,           
+        ]);
+        DB::table('seats')->insert([
+            'seat_number' => 'B10',
+            'bus_id' => 1,           
+        ]);
     }
 }

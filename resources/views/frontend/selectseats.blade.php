@@ -10,7 +10,7 @@
                 <form action="{{ route('ticket.buy') }}" method="post">
                     @csrf
                     <div class="label">
-                        <h4 for="">Select Seat To Book</h4>
+                        <h4 class="mb-3">Select Seat To Book for {{$booking_date}}</h4>
                     </div>
                     <div class="d-flex justify-content-evenly flex-wrap">
                         <?php

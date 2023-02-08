@@ -6,17 +6,19 @@
 use App\Models\User;
 use App\Models\Buses;
 use App\Models\Routes;
+use App\Models\Bookings;
 $user_count = User::where('isRole','user')->get()->count();
 $bus_count = Buses::where('status', 'Active')->get()->count();
 $route_count = Routes::where('status', 'Active')->get()->count();
 $date = date(today()->format('Y-m-d'));
 $last_three_days_date = date( "Y-m-d",strtotime("-3 day"));
 $latest_user_count = User::where('created_at','>=',$last_three_days_date)->where('isRole','user')->get()->count();
+$booking = Bookings::where('payment_status', 'Paid')->get();
 $revenue = 0;
-// foreach($buy as $item)
-// {
-//     $revenue = $revenue + $item->total;
-// }
+foreach($booking as $item)
+{
+    $revenue = $revenue + $item->total_price;
+}
 
 ?>
 <!-- Main content -->

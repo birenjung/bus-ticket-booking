@@ -29,10 +29,11 @@ class BusSeeder extends Seeder
             'isCharger' => 1,
             'isCharger' => 1,
             'isTV' => 1,
-            'price' => 50,
+            'price' => 1000,
             'route_id' => 2,
             'departure' => '4:30 AM'
         ]);
+        
         DB::table('buses')->insert([
             'bus_name' => 'Sakira',
             'bus_type' => 'Delux',
@@ -49,6 +50,7 @@ class BusSeeder extends Seeder
             'price' => 2000,
             'route_id' => 1,
             'departure' => "4:30 AM",
-        ]);                
+        ]);               
+        
     }
 }

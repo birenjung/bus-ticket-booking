@@ -70,7 +70,7 @@
                 <h5 class="text-center">Top Routes <i class="fa-solid fa-route"></i></h5>
                 <ul>
                     <li>Itahari - Kathmandu</li>
-                    <li>Dharan - Pokhara</li>                    
+                    <li>Itahari - Chitwan</li>                    
                 </ul>
             </div>
             <div>

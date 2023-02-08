@@ -37,14 +37,31 @@
                                 <td>{{$b_info->passenger_phone_number}}</td>
                                 <td>{{$b_info->passenger_pickup_point}}</td>
                                 <td>{{$b_info->payment_terms}}</td>
-                                <td>{{$b_info->payment_status}}</td>
-                                <td>{{$b_info->total_price}}</td>
+                                
+                                    @if ($b_info->payment_status == 'Paid')
+                                            <td>
+                                                <h5><Span class="badge bg-success">{{ $b_info->payment_status }}</Span></h5>
+                                            </td>
+                                        @else
+                                            <td>
+                                                <h5><Span class="badge bg-danger">{{ $b_info->payment_status }}</Span></h5>
+                                            </td>
+                                        @endif                              
+                               
+                                <td> Rs. {{$b_info->total_price}}</td>
+                                <td>
+                                @if ($b_info->payment_status == 'Active')
+                                    <a href="/admin/change-pay-status/{{ $b_info->id }}"
+                                        class="btn-sm btn-danger ml-2">Change Payment Status</a>
+                                @else
+                                    <a href="/admin/change-pay-status/{{ $b_info->id }}"
+                                        class="btn-sm btn-success ml-2">Change Payment Status</a>
+                                @endif
+                                                                        
+                            </td>
                             </tr><?php
-                                }
-                            
-                           
-                            }
-                           
+                                }                        
+                            }                       
 
                            ?>
 

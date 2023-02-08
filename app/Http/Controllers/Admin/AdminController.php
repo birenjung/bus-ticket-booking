@@ -62,4 +62,22 @@ class AdminController extends Controller
 
         return view('admin.tickets.bookings', compact('booking_info'));
     }
+
+    function changePayStatus($id)
+    {
+        $booking = Bookings::find($id);
+        if($booking->payment_status == 'Pending')
+        {
+            $booking->payment_status = 'Paid';
+            $booking->update();
+            return back();
+        }
+        else
+        {
+            $booking->payment_status = 'Pending';
+            $booking->update();
+            return back();
+        }
+
+    }
 }

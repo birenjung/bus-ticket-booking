@@ -18,4 +18,9 @@ class Buses extends Model
     {
         return $this->hasMany(BookedSeates::class);
     }
+
+    function rating()
+    {
+        return $this->hasMany(Rating::class);
+    }
 }

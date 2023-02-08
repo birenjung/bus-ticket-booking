@@ -69,10 +69,10 @@
                 <h4 class="text-center mb-5">Manage my account</h4>
                 <ul class="user_dashboard_list text-center">
                     <li>
-                        <a href="">My Profile</a>                        
+                        <a href="/user">My Profile</a>                        
                     </li>
                     <li>
-                        <a href="">My Rides</a>
+                        <a href="/myrides">My Rides</a>
                     </li>
                 </ul>
             </div>
@@ -89,16 +89,14 @@
                 <h5 class="text-center">Top Routes <i class="fa-solid fa-route"></i></h5>
                 <ul>
                     <li>Itahari - Kathmandu</li>
-                    <li>Dharan - Pokhara</li>
-                    <li>Kathmandu - Limbuni</li>
+                    <li>Itahari - Chitwan</li>                    
                 </ul>
             </div>
             <div>
                 <h5 class="text-center">Top Operators <i class="fa-solid fa-bus"></i></h5>
                 <ul>
-                    <li>Ram Karki</li>
-                    <li>Hari Limbu</li>
-                    <li>Shyam Rai</li>
+                    <li>Agni</li>
+                    <li>Sakira</li>                    
                 </ul>
             </div>
         </div>

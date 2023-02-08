@@ -11,7 +11,7 @@
             <div class="col-12 p-0">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Your Ticket Orders</h3>
+                        <h3 class="card-title">Search for booking details.</h3>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
@@ -26,13 +26,14 @@
                                 </select>
                             </div>
                             <div class="mb-3">
-                                <label for="bus_name">Select Date</label>
+                                {{-- <label for="bus_name">Select Date</label>
                                 <select class="form-control" aria-label="Default select example" name="date">
                                     @foreach ($bookings as $booking)
                                         <option value="{{ $booking->booking_date }}">{{ $booking->booking_date }}
                                         </option>
                                     @endforeach
-                                </select>
+                                </select> --}}
+                                <input type="date" name="date" class="form-control">
                             </div>
                             <button type="submit" class="btn btn-primary">View booking</button>
 
