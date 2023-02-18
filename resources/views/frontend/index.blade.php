@@ -31,18 +31,24 @@
                             style="text-decoration: none; color:black;"><img src="{{ $bus->image }}" class="card-img-top"
                                 alt="...">
                             <div class="card-body">
-                                <p class="text-center" style="font-weight: bold;">Ratings <br>
-                                    {{$bus['average_rating']}}/5 <i class="fa-solid fa-star"></i>
-                                </p>
-                                <h4 class="card-title text-center">{{ $bus->bus_name }}</h4>
-                                <h5 class="card-title text-center">{{ $bus->bus_type }}</h5>
+                                <div class="box d-flex justify-content-between">
+                                    <div class="bus-details">
+                                        <h4 class="card-title text-center">{{ $bus->bus_name }}</h4>
+                                        <h5 class="card-title text-center">{{ $bus->bus_type }}</h5>
+                                    </div>
+
+                                    <p class="text-center" style="font-weight: bold;">Ratings <br>
+                                        {{ $bus['average_rating'] }}/5 <i class="fa-solid fa-star"></i>
+                                    </p>
+                                   
+                                </div>
                                 @if (auth()->user())
-                                <p style="text-align: right"> Your rating <br>
-                                    @if (!$bus['ratingg'])
-                                        0/5 <i class="fa-solid fa-star"></i>
-                                </p>
-                            @else
-                                {{ $bus['ratingg'] }}/5 <i class="fa-solid fa-star"></i></p>                                    
+                                    <p style="text-align: right"> Your rating <br>
+                                        @if (!$bus['ratingg'])
+                                            0/5 <i class="fa-solid fa-star"></i>
+                                    </p>
+                                @else
+                                    {{ $bus['ratingg'] }}/5 <i class="fa-solid fa-star"></i></p>
                                 @endif
                 @endif
 
@@ -129,8 +135,8 @@
                 {
                     ?>
         <!-- Modal -->
-        <div class="modal fade" id="exampleModal-{{ $bus->id }}" tabindex="-1" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
+        <div class="modal fade" id="exampleModal-{{ $bus->id }}" tabindex="-1"
+            aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">

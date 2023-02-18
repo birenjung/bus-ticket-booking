@@ -17,18 +17,22 @@
                         $seats = $bus->seates;
                         ?>
 
+                        @if (count($seats) > 0)
                         @foreach ($seats as $seat)
-                            <div class="mb-3" style="width:20%;">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="{{ $seat->id }}"
-                                        name="seat_number[]" id="flexCheckDefault"
-                                        @if ($seat->booked_status == true) checked disabled readonly @endif>
-                                    <label class="form-check-label" for="flexCheckDefault">
-                                        {{ $seat->seat_number }}
-                                    </label>
-                                </div>
+                        <div class="mb-3" style="width:20%;">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="{{ $seat->id }}"
+                                    name="seat_number[]" id="flexCheckDefault"
+                                    @if ($seat->booked_status == true) checked disabled readonly @endif>
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    {{ $seat->seat_number }}
+                                </label>
                             </div>
-                        @endforeach
+                        </div>
+                    @endforeach
+                        @else
+                            <div class="text-danger">Seats are not added yet.</div>
+                        @endif
                     </div>
 
                     <div class="form-group mt-3">

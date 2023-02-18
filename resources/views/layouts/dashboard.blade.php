@@ -15,6 +15,14 @@
     {{-- font awesome --}}
     <script src="https://kit.fontawesome.com/ad2db55012.js" crossorigin="anonymous"></script>
 
+    <!-- html2pdf CDN link -->
+		<script
+        src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
+        integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg=="
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer"
+    ></script>
+
 </head>
 
 <body>
@@ -72,7 +80,7 @@
                         <a href="/user">My Profile</a>                        
                     </li>
                     <li>
-                        <a href="/myrides">My Rides</a>
+                        <a href="/myrides">My Bookings</a>
                     </li>
                 </ul>
             </div>

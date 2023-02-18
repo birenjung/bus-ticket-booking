@@ -3,7 +3,6 @@
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Auth\AuthController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Auth\GoogleAuthController;
 use App\Http\Controllers\Bus\BusController;
 use App\Http\Controllers\BusRoutes\RouteController;
 use App\Http\Controllers\BuyTicket\BuyTicketController;
@@ -80,32 +79,31 @@ Route::group(['middleware' => ['auth']], function () {
      Route::get('/admin', [AdminController::class, 'index'])->name('dashboard');
 
      //buses
-     Route::get('/admin/buses', [AdminController::class, 'buses']);
+     Route::get('/admin/buses', [AdminController::class, 'buses'])->middleware('can:view');
      Route::post('/admin/store-bus', [BusController::class, 'store'])->name('store.buses');
-     Route::get('/admin/edit-bus/{id}', [BusController::class, 'edit'])->name('edit.bus');
+     Route::get('/admin/edit-bus/{id}', [BusController::class, 'edit'])->middleware('can:isAdmin')->name('edit.bus');
      Route::post('/admin/update-bus/{id}', [BusController::class, 'update'])->name('update.bus');
-     Route::get('/admin/delete-bus/{id}', [BusController::class, 'destroy'])->name('delete.bus');
+     Route::get('/admin/delete-bus/{id}', [BusController::class, 'destroy'])->middleware('can:isAdmin')->name('delete.bus');
      Route::get('/admin/change-bus-status/{id}', [BusController::class, 'changeStatus']);
 
      //bus routes
      Route::get('/admin/routes', [AdminController::class, 'routes']);
      Route::post('/admin/store-route', [RouteController::class, 'store'])->name('store.route');
-     Route::get('/admin/edit-route/{id}', [RouteController::class, 'edit'])->name('edit.route');
-     Route::post('/admin/update-route/{id}', [RouteController::class, 'update'])->name('update.route');
-     Route::get('/admin/delete-route/{id}', [RouteController::class, 'destroy'])->name('delete.route');
-     Route::get('/admin/change-route-status/{id}', [RouteController::class, 'changeStatus']);
+     Route::get('/admin/edit-route/{id}', [RouteController::class, 'edit'])->middleware('can:isAdmin')->name('edit.route');
+     Route::post('/admin/update-route/{id}', [RouteController::class, 'update'])->middleware('can:isAdmin')->name('update.route');
+     Route::get('/admin/delete-route/{id}', [RouteController::class, 'destroy'])->middleware('can:isAdmin')->name('delete.route');
+     Route::get('/admin/change-route-status/{id}', [RouteController::class, 'changeStatus'])->middleware('can:isAdmin');
      
     // buy ticket
-    Route::get('/admin/tickets', [AdminController::class, 'tickets'])->name('tickets');
-    Route::get('/admin/date_time', [TimeTableController::class, 'tickets']);
-    //Route::get('/get-buy-ticket', [BuyTicketController::class, 'getAll'])->name('getAll.buy');
+    Route::get('/admin/tickets', [AdminController::class, 'tickets'])->middleware('can:isAdmin')->name('tickets');
+   
 
     // add seat
     Route::post('/admin/add-seat/{bus_id}', [SeatController::class, 'store'])->name('store.seat');
-    Route::get('/admin/seat/{bus_id}', [SeatController::class, 'create'])->name('create.seat');
+    Route::get('/admin/seat/{bus_id}', [SeatController::class, 'create'])->middleware('can:isAdmin')->name('create.seat');
 
     //bookings
-    Route::get('/admin/bookings', [AdminController::class, 'showBookings'])->name('bookings');
-    Route::get('/admin/change-pay-status/{id}', [AdminController::class, 'changePayStatus']);
+    Route::get('/admin/bookings', [AdminController::class, 'showBookings'])->middleware('can:isAdmin')->name('bookings');
+    Route::get('/admin/change-pay-status/{id}', [AdminController::class, 'changePayStatus'])->middleware('can:isAdmin');
      
 });

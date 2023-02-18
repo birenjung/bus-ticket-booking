@@ -14,6 +14,7 @@ use App\Models\User;
 use Flasher\Prime\Response\ResponseManager;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Illuminate\Routing\Route;
 
 class FrontendController extends Controller
 {
@@ -26,7 +27,7 @@ class FrontendController extends Controller
             $bus['route'] = $route->route_name;
             $seats = Seats::where('bus_id', $bus->id)->first();
             $bus['seats'] = $seats;
-            $total_rating = 0;
+            
             if(auth()->user())
             {
                 $rating = Rating::where('user_id', auth()->user()->id)->where('bus_id', $bus->id)->first();
@@ -36,11 +37,19 @@ class FrontendController extends Controller
                 $bus['ratingg'] = $rating->rating;
             }   
             $bus_ratings = Rating::where('bus_id', $bus->id)->get();
+            $total_rating = 0;
             foreach($bus_ratings as $bus_rating)
             {
                 $total_rating = $total_rating + $bus_rating->rating;
             }
-            $bus['average_rating'] = $total_rating/count($bus_ratings); 
+            if(count($bus_ratings) > 0) 
+            {
+                $bus['average_rating'] = $total_rating/count($bus_ratings);
+            }
+            else
+            {
+                $bus['average_rating'] = 0;
+            }
 
         } 
         //dd($buses);
@@ -60,11 +69,29 @@ class FrontendController extends Controller
         if (auth()->user()->isRole == 'user') {
 
             $bookings = Bookings::where('user_id', auth()->user()->id)->get();
+
+            foreach($bookings as $book)
+            {
+                $seates = BookedSeates::where('booking_id',$book->id)->get();
+                $book['no_of_seats_booked'] = $seates->count();
+
+                foreach($seates as $seat)
+                {
+                    $seat_name = Seats::where('id',$seat->seat_id)->first();
+                    $seat['seat_name'] = $seat_name->seat_number;
+                }
+
+                $book['booked_seat'] = $seates;
+            }
             //dd($bookings);
             foreach($bookings as $booking)
             {
                 $bus = Buses::where('id', $booking->bus_id)->first();
+                $route = Routes::where('id',$bus->route_id)->first();
+               
                 $booking['bus_name'] = $bus->bus_name;
+                $booking['route'] = $route->route_name;
+
             }
             return view('frontend.myrides', compact('bookings'));
         }

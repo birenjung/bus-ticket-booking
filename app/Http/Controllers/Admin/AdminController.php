@@ -36,6 +36,7 @@ class AdminController extends Controller
 
     function routes()    
     {
+        $this->authorize('isAdmin', Routes::class);
         $routes = Routes::all();
         return view('admin.routes.index', compact('routes'));
     }

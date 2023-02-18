@@ -18,15 +18,12 @@
 </head>
 
 <body>
-    {{-- <div class="container-fluid bg-dark text-white d-flex justify-content-around pt-3">
-            <div>
-                <p>Call Us : 9827383049</p>
-            </div>
-            <div>
-                <span style="margin-right: 20px;">Register</span>
-                <span>Login</span>
-            </div>
-        </div> --}}
+    <?php
+            use App\Models\Buses;
+            use App\Models\Routes;
+            $buses = Buses::where('status', 'active')->take(2)->get();
+            $routes = Routes::where('status', 'active')->take(2)->get();
+    ?>
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
@@ -68,16 +65,18 @@
         <div class="container-fluid bg-secondary text-white d-flex justify-content-around p-4">
             <div>
                 <h5 class="text-center">Top Routes <i class="fa-solid fa-route"></i></h5>
-                <ul>
-                    <li>Itahari - Kathmandu</li>
-                    <li>Itahari - Chitwan</li>                    
+                <ul>                    
+                    @foreach ($routes as $route)
+                    <li>{{ $route->route_name }}</li>                        
+                @endforeach           
                 </ul>
             </div>
             <div>
                 <h5 class="text-center">Top Operators <i class="fa-solid fa-bus"></i></h5>
                 <ul>
-                    <li>Agni</li>
-                    <li>Sakira</li>                    
+                    @foreach ($buses as $bus)
+                        <li>{{ $bus->bus_name }}</li>                        
+                    @endforeach                     
                 </ul>
             </div>
         </div>

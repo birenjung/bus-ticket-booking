@@ -50,6 +50,7 @@ class RouteController extends Controller
      */
     public function store(Request $request)
     {
+        //$this->authorize('isAdmin', Routes::class);
         $request->validate([
             'route_name' => 'required'
         ]);
